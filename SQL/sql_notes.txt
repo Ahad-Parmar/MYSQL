@@ -1,0 +1,25 @@
+select * from employees;
+
+     Allias (this is query of ch. 2) 
+
+select last_name AS name, commission_pct comm
+from employees;
+
+select last_name "Name", salary*12 "Annual Salary"
+from employees;
+
+concat last_name&job_id
+
+select last_name||job_id as "employees" 
+from employees;
+
+select last_name ||'is a'||job_id AS "Employee Details"
+from employees;
+
+     quote operator
+
+select department_name || q'[department's manager id: ]' || manager_id AS "department and manager"
+from departments;
+
+(checking the structure) desc employees;
+

@@ -1,0 +1,260 @@
+  where clause
+
+select employee_id, last_name ,job_id, department_id
+from employees
+where department_id =90;
+
+
+select last_name ,job_id, department_id
+from employees
+where last_name ='Whalen';
+
+select last_name 
+from employees
+where hire_date ='17-FEB-96';
+
+
+select last_name,salary 
+from employees
+where salary<=3000;
+
+select last_name,salary                                                       
+from employees                                                                    
+where salary between 2500 and 3500;                                           
+
+select first_name,salary,employee_id,manager_id 
+from employees
+where manager_id IN (100,101,201);
+
+
+select first_name 
+from employees
+where first_name LIKE 'S%';
+
+
+select last_name 
+from employees
+where last_name LIKE '_o%';
+
+select last_name,manager_id 
+from employees
+where manager_id IS NULL;
+
+desc employees;
+
+Name                                      Null?    Type
+----------------------------------------- -------- -----------------
+EMPLOYEE_ID                               NOT NULL NUMBER(6)
+FIRST_NAME                                         VARCHAR2(20)
+LAST_NAME                                 NOT NULL VARCHAR2(25)
+EMAIL                                     NOT NULL VARCHAR2(25)
+PHONE_NUMBER                                       VARCHAR2(20)
+HIRE_DATE                                 NOT NULL DATE
+JOB_ID                                    NOT NULL VARCHAR2(10)
+SALARY                                             NUMBER(8,2)
+COMMISSION_PCT                                     NUMBER(2,2)
+MANAGER_ID                                         NUMBER(6)
+DEPARTMENT_ID                                      NUMBER(4)
+
+
+
+select EMPLOYEE_ID ,last_name ,job_id,SALARY 
+from employees
+where SALARY >= 10000 and JOB_ID like '%MAN%';
+
+
+select EMPLOYEE_ID ,last_name ,job_id,SALARY 
+from employees
+where SALARY >= 10000 or JOB_ID like '%MAN%';
+
+select last_name ,job_id 
+from employees
+where JOB_ID NOT IN('IT_PROG','ST_CLERK','SA_REP');
+
+
+
+select last_name ,job_id ,SALARY
+from employees
+where JOB_ID ='SA_REP' OR JOB_ID = 'AD_PRES' AND SALARY>15000;
+
+
+
+select last_name ,job_id ,SALARY
+from employees
+where (JOB_ID ='SA_REP' OR JOB_ID = 'AD_PRES') AND SALARY>15000;
+
+
+
+select last_name ,job_id ,SALARY,DEPARTMENT_ID,HIRE_DATE
+from employees
+ORDER BY HIRE_DATE;
+
+select last_name ,job_id ,SALARY,DEPARTMENT_ID,HIRE_DATE
+from employees
+ORDER BY HIRE_DATE DESC;
+
+
+select EMPLOYEE_ID,last_name,SALARY*12 ANNSAL
+from employees
+ORDER BY ANNSAL DESC;
+
+select last_name ,job_id ,HIRE_DATE,DEPARTMENT_ID
+from employees
+ORDER BY 4;
+
+
+select last_name ,DEPARTMENT_ID,SALARY
+from employees
+ORDER BY 3,2 dESC;
+
+select EMPLOYEE_ID,LAST_NAME ,SALARY,DEPARTMENT_ID
+from employees
+WHERE EMPLOYEE_ID = &EMPLOYEE_ID;
+
+
+select LAST_NAME,DEPARTMENT_ID,SALARY*12
+from employees
+WHERE JOB_ID='&JOB_TITLE';
+
+
+WHERE EMPLOYEE_ID = &EMPLOYEE_ID;
+
+
+SELECT EMPLOYEE_ID,LAST_NAME,JOB_ID,&COLUMN_NAME
+FROM EMPLOYEES
+WHERE &CONDITION
+ORDER BY &ORDER_COLUMN;
+
+
+SELECT EMPLOYEE_ID,LAST_NAME,JOB_ID,&&COLUMN_NAME
+FROM EMPLOYEES
+ORDER BY &COLUMN_NAME;
+
+        DEFINE & VERIFY
+
+1. 
+
+DEFINE EMPLOYEE_NUM=200
+
+SELECT EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID
+FROM EMPLOYEES
+WHERE EMPLOYEE_ID=&EMPLOYEE_NUM;
+
+UNDEFINE EMPLOYEE_NUM
+
+2. 
+
+SET VERIFY ON
+SELECT EMPLOYEE_ID,LAST_NAME,SALARY
+FROM EMPLOYEE
+WHERE EMPLOYEE_ID=&EMPLOYEE_NUM;
+
+	SQL FUNCTION
+
+LOWER			CONCAT
+UPPER			SUBSTR	
+INITCAP			LENGTH
+			INSTR
+			LPAD\ RPAD
+			TRIM
+			REPLACE
+
+DUAL IS A DUMMY TABLE.
+
+SELECT LOWER('SQL COURSE') FROM DUAL;
+SELECT UPPER('SQL Course') FROM DUAL;
+SELECT LOWER('sql COURSE') FROM DUAL;
+
+SELECT EMPLOYEE_ID, LAST_NAME,DEPARTMENT_ID
+FROM EMPLOYEES
+WHERE LAST_NAME ='HIGGINS';
+
+
+SELECT EMPLOYEE_ID, LAST_NAME,DEPARTMENT_ID
+FROM EMPLOYEES
+WHERE LOWER(LAST_NAME) ='higgins';
+
+
+SELECT CONCAT('HELLO','WORLD') FROM DUAL;
+SELECT SUBSTR('HELLOWORLD',1,5) FROM DUAL;
+SELECT LENGTH('HELLOWORLD') FROM DUAL;
+SELECT INSTR('HELLOWORLD','W') FROM DUAL;
+SELECT LPAD(10000,10,'*') FROM DUAL;
+SELECT RPAD(150000,10,'*') FROM DUAL;
+REPLACE('JACK AND JILL','J','BL') FROM DUAL;
+TRIM ('H' FROM 'HELLOWORLD') FROM DUAL;
+
+SELECT EMPLOYEE_ID,CONCAT(FIRST_NAME,LAST_NAME) NAME
+,JOB_ID,LENGTH(LAST_NAME),INSTR(LAST_NAME,'a') "CONTAINS 'a'?"
+FROM EMPLOYEES
+WHERE SUBSTR(JOB_ID,4)='REP';
+
+SELECT ROUND(45.923),ROUND(45.923,0),ROUND(45.923,-1)
+FROM DUAL;
+
+SELECT ROUND(45.923),ROUND(45.923,0),ROUND(45.923,-2)
+FROM DUAL;
+
+  11/09/2018 tuesday
+
+working with dates
+DD-MON-RR FORMATE MAKE SURE
+
+SELECT LAST_NAME,HIRE_DATE
+FROM EMPLOYEES
+WHERE HIRE_DATE<'01-FEB-88';
+
+SYSDATE IS THE FUNCTION THAT RETURNS
+DATE AND TIME
+
+SELECT SYSDATE
+FROM DUAL;
+
+USING ARITMETIC OPERATOR WITH DATE
+
+SELECT LAST_NAME,(SYSDATE-HIRE_DATE)/7 AS WEEKS
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID=90;
+
+USING DATE FUNCTION 
+
+SELECT MONTHS_BETWEEN('01-SEP-95','11-JAN-94') FROM DUAL;
+SELECT ADD_MONTHS('31-JAN-96',1) FROM DUAL;
+SELECT NEXT_DAY('01-SEP-95','FRIDAY') FROM DUAL;
+SELECT LAST_DAY('01-FEB-95') FROM DUAL;
+
+SELECT ROUND(SYSDATE,'MONTH') FROM DUAL;
+SELECT ROUND(SYSDATE,'YEAR') FROM DUAL;
+SELECT TRUNC(SYSDATE,'MONTH') FROM DUAL;
+SELECT TRUNC(SYSDATE,'YEAR') FROM DUAL;
+
+SELECT LAST_NAME,TO_CHAR(HIRE_DATE,'FMDD MONTH YYYY') AS HIREDATE
+FROM EMPLOYEES;
+
+SELECT TO_CHAR(SALARY,'$99,999.00') SALARY
+FROM EMPLOYEES
+WHERE LAST_NAME='Ernst';
+
+SELECT LAST_NAME,TO_CHAR(HIRE_DATE,'DD-MON-YYYY')
+FROM EMPLOYEES
+WHERE HIRE_DATE< TO_DATE('01-JAN-90','DD-MON-RR');
+
+SELECT LAST_NAME,UPPER(CONCAT(SUBSTR(LAST_NAME,1,8),'_US'))
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID=60;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
